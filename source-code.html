@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast-Page | Ultra-Secure Neon Search</title>
+    <style>
+        :root {
+            --neon-blue: #0ff0fc;
+            --neon-purple: #9600ff;
+            --dark-bg: #0a0a1a;
+            --darker-bg: #050510;
+            --text-color: #e0e0ff;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(150, 0, 255, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0, 240, 252, 0.15) 0%, transparent 30%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(150, 0, 255, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(150, 0, 255, 0.3);
+        }
+
+        .logo span {
+            font-size: 14px;
+            margin-left: 10px;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        nav ul li a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .search-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 2px solid rgba(150, 0, 255, 0.5);
+            background-color: var(--darker-bg);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(150, 0, 255, 0.2);
+        }
+
+        .search-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 252, 0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 240, 252, 0.5);
+        }
+
+        .security-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: rgba(0, 240, 252, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--neon-blue);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background-color: rgba(10, 10, 30, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid rgba(150, 0, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 20px rgba(0, 240, 252, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+
+        .language-switcher {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .language-btn.active {
+            background-color: rgba(150, 0, 255, 0.3);
+            color: var(--neon-blue);
+        }
+
+        .language-btn:hover {
+            color: var(--neon-blue);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(150, 0, 255, 0.3);
+            font-size: 14px;
+        }
+
+        .neon-link {
+            color: var(--neon-blue);
+            text-decoration: none;
+            transition: text-shadow 0.3s;
+        }
+
+        .neon-link:hover {
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Search results styles */
+        .search-results {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+
+        .result-item {
+            background-color: rgba(10, 10, 30, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--neon-purple);
+            transition: all 0.3s;
+        }
+
+        .result-item:hover {
+            border-left-color: var(--neon-blue);
+            transform: translateX(5px);
+        }
+
+        .result-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+
+        .result-link {
+            color: var(--neon-purple);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .result-link:hover {
+            text-decoration: underline;
+            color: var(--neon-blue);
+        }
+
+        .result-snippet {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--neon-blue);
+            font-size: 18px;
+        }
+
+        /* Animation */
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .search-input {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                Fast-Page <span>by NeoNeon</span>
+            </div>
+        </header>
+
+        <section class="search-section">
+            <h1>Search Without Compromise</h1>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Ask anything..." id="searchQuery">
+                <button class="search-btn" id="searchButton">Search</button>
+            </div>
+            <div class="security-badge pulse">
+                🔒 Ultra-Secure Mode Active | No Tracking
+            </div>
+        </section>
+
+        <section class="language-switcher">
+            <button class="language-btn active">English</button>
+            <button class="language-btn">Русский</button>
+        </section>
+
+        <div class="search-results" id="searchResults">
+            <!-- Results will be inserted here by JavaScript -->
+        </div>
+
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Super Secure Search</h3>
+                <p>Advanced filtering against malware, phishing, and scams. Automatic tracker blocking with end-to-end encryption for all queries.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3 class="feature-title">Smart Filtering</h3>
+                <p>Customizable content filters for adult content, violence, and misinformation. Strict mode for verified sources only.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗃️</div>
+                <h3 class="feature-title">Massive Database</h3>
+                <p>Over 50 billion indexed pages with deep web coverage. Instant updates with new sites added in minutes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Built-in Translator</h3>
+                <p>Real-time translation for 100+ languages, including rare dialects. No external services needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 class="feature-title">Archive Search</h3>
+                <p>Access historical versions of websites with seamless Wayback Machine integration.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎙️</div>
+                <h3 class="feature-title">Voice Search</h3>
+                <p>Neural network-powered voice recognition for hands-free searching with 99% accuracy.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>CopyRight FREE 2025 <a href="http://neoneon.fast-page.org/" class="neon-link">Fast-Page</a> by <a href="http://neoneon.42web.io/" class="neon-link">NeoNeon</a> (non-profit organization)</p>
+            <p>No ads. No tracking. Just pure search.</p>
+            <p>Powered by the community, for the community.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Demo search database
+        const searchDatabase = [
+            {
+                title: "YouTube - Video Sharing Platform",
+                url: "https://www.youtube.com",
+                snippet: "YouTube is a global video-sharing platform where users can watch, like, share, comment and upload their own videos."
+            },
+            {
+                title: "Wikipedia - The Free Encyclopedia",
+                url: "https://www.wikipedia.org",
+                snippet: "Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation."
+            },
+            {
+                title: "GitHub - Where the world builds software",
+                url: "https://github.com",
+                snippet: "GitHub is where over 100 million developers shape the future of software, together. Contribute to the open source community."
+            },
+            {
+                title: "Google - Search Engine",
+                url: "https://www.google.com",
+                snippet: "Google Search is a search engine provided by Google. It is the most used search engine on the World Wide Web."
+            },
+            {
+                title: "Fast-Page",
+                url: "https://neoneon.fast-page.org",
+                snippet: "Official documentation for Fast-Page search engine. Learn about all features and customization options."
+            },
+            {
+                title: "NeoNeon Official Website",
+                url: "http://neoneon.42web.io",
+                snippet: "Official website of NeoNeon non-profit organization. Learn about our mission and projects."
+            },
+            {
+                title: "MDN Web Docs - Web Development Resources",
+                url: "https://developer.mozilla.org",
+                snippet: "Resources for developers, by developers. Documenting web technologies, including CSS, HTML, and JavaScript."
+            },
+            {
+                title: "Stack Overflow - Developer Questions",
+                url: "https://stackoverflow.com",
+                snippet: "Stack Overflow is a question and answer website for professional and enthusiast programmers."
+            }
+        ];
+
+        // Search functionality
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchQuery').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = document.getElementById('searchQuery').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (!query) {
+                return;
+            }
+
+            // Hide features section when showing results
+            document.getElementById('features').style.display = 'none';
+            
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+            resultsContainer.style.display = 'block';
+
+            // Find matching results
+            const matchingResults = searchDatabase.filter(item => {
+                return item.title.toLowerCase().includes(query) || 
+                       item.snippet.toLowerCase().includes(query) ||
+                       item.url.toLowerCase().includes(query);
+            });
+
+            if (matchingResults.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        No results found for "${query}". Try different keywords.
+                    </div>
+                `;
+                return;
+            }
+
+            // Display results
+            matchingResults.forEach(result => {
+                const resultElement = document.createElement('div');
+                resultElement.className = 'result-item';
+                resultElement.innerHTML = `
+                    <h3 class="result-title">${result.title}</h3>
+                    <a href="${result.url}" class="result-link" target="_blank">${result.url}</a>
+                    <p class="result-snippet">${result.snippet}</p>
+                `;
+                resultsContainer.appendChild(resultElement);
+            });
+
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Language switching functionality
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                if (this.textContent === 'Русский') {
+                    // Switch to Russian
+                    document.querySelector('h1').textContent = 'Поиск без компромиссов';
+                    document.querySelector('.search-input').placeholder = 'Спросите что угодно...';
+                    document.querySelector('.search-btn').textContent = 'Поиск';
+                    document.querySelector('.security-badge').innerHTML = '🔒 Активен сверхбезопасный режим | Нет отслеживания';
+                } else {
+                    // Switch to English
+                    document.querySelector('h1').textContent = 'Search Without Compromise';
+                    document.querySelector('.search-input').placeholder = 'Ask anything...';
+                    document.querySelector('.search-btn').textContent = 'Search';
+                    document.querySelector('.security-badge').innerHTML = '🔒 Ultra-Secure Mode Active | No Tracking';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
